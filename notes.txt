@@ -1,0 +1,64 @@
+Template Syntax (via template-egenskap):
+
+let vm = Vue.createApp({
+    data() {
+        return {
+            message: "Hello world!"
+        }
+    },
+    template: `{{ message }}`
+}).mount('#app')
+
+Templates er definert i JavaScript-koden, og Vue må kompilere denne template-syntaksen (som {{ message }}) til JavaScript som genererer DOM-elementer.
+Dette krever bruk av fullversjonen av Vue som inkluderer kompilatoren: 
+    <script src="https://unpkg.com/vue@3"></script>
+
+Fordeler:
+* Enklere å forstå og bruke for nybegynnere.
+* Templates ser ut som HTML, noe som gjør dem lettleste og tilgjengelige for utviklere med erfaring i front-end.
+
+Ulemper:
+* Mindre effektivt: Kompilering av templates skjer i nettleseren, noe som kan påvirke ytelsen for større applikasjoner.
+* Ikke den vanligste metoden: I praksis skriver de fleste utviklere templates direkte i HTML-en ved å bruke {{ message }}.
+
+
+Render-funksjon (via render-metoden):
+
+let vm2 = Vue.createApp({
+    data() {
+        return {
+            message: "Hello world!"
+        }
+    },
+    render() {
+        return Vue.h('h1', this.message)
+    }
+}).mount('#app2')
+
+Render-funksjonen lager DOM-elementer direkte i JavaScript, uten behov for kompilering. Dette gjør metoden raskere og mer effektiv.
+Denne metoden krever kun runtime-versjonen av Vue, som ikke inneholder kompilatoren: 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.runtime.global.min.js"></script>
+
+Fordeler:
+* Effektivitet: Ingen runtime-kompilering, noe som gjør dette raskere, spesielt i produksjon.
+* Fleksibilitet: Gir deg full kontroll over hvordan DOM bygges dynamisk.
+
+Ulemper: 
+* Mer kode og kompleksitet sammenlignet med templates.
+* Mindre intuitivt for utviklere uten erfaring med JavaScript-funksjoner.
+
+Det mest vanlige er å definere data og bruke template syntax direkte i HTML:
+    <div id="app">{{ message }}</div>
+Dette gjør at du kan unngå å bruke template-egenskapen i koden.
+I produksjonsmiljøer der ytelse er viktig, brukes ofte render-funksjonen i kombinasjon med byggeverktøy som forhåndskomplilerer templates til render-funksjoner før distribusjon.
+
+Sammendrag:
+Template Syntax:
+Bruk av {{ message }} eller template-egenskap. Best for nybegynnere eller enkle prosjekter.
+https://unpkg.com/vue@3 (Fullversjon med kompilator)
+* Bruk template syntax (og vanligvis {{ message }} i HTML) for rask utvikling og enkle prosjekter.
+
+Render-funksjon:
+Direkte JavaScript-rendering. Mer effektiv og kontrollert. Best for store eller komplekse prosjekter.
+https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.13/vue.runtime.global.min.js (Kun runtime)
+* Bruk render-funksjon for maksimal ytelse og fleksibilitet i større applikasjoner.
